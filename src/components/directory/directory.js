@@ -9,7 +9,7 @@ class Directory extends Component {
         title: "hats",
         imageUrl: "https://i.ibb.co/cvpntL1/hats.png",
         id: 1,
-        linkUrl: "shop/hats",
+        linkUrl: "shop/hats/12",
       },
       {
         title: "jackets",
@@ -49,6 +49,7 @@ class Directory extends Component {
             imageUrl={section.imageUrl}
             key={section.id}
             size={section.size}
+            linkUrl={section.linkUrl}
           />
         ))}
       </div>
