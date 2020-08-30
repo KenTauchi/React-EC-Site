@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import FormInput from "../form-input/form-input";
 import CustomButton from "../custom-button/custom-button";
 
-import { auth, createProfileDocument } from "../../firebase/firebase.utils";
+import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 
 import "./sign-up.styles.scss";
 
@@ -32,7 +32,7 @@ class SignUp extends Component {
         password
       );
       console.log(user);
-      await createProfileDocument(user, { displayName });
+      await createUserProfileDocument(user, { displayName });
 
       //   below setState is to reset the state value after creating the user. This will not be called until after the createPro.. function because of the await method
       this.setState({
