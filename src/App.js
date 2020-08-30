@@ -6,18 +6,9 @@ import ShopPage from "./pages/shop/shop";
 import Header from "./components/header/header";
 import SignInAndSignUp from "./pages/sign-in-and-sign-up/sign-in-and-sign-up";
 
-import { auth } from "./firebase/firebase.utils";
+import { auth, createProfileDocument } from "./firebase/firebase.utils";
 
 import { Switch, Route } from "react-router-dom";
-
-// const HatsPage = (props) => {
-//   console.log(props);
-//   return (
-//     <div>
-//       <h1>HATS PAGE</h1>
-//     </div>
-//   );
-// };
 
 class App extends Component {
   state = {
@@ -27,12 +18,32 @@ class App extends Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      console.log("userAuth", userAuth);
+      if (userAuth) {
+        const userRef = await createProfileDocument(userAuth);
+
+        userRef.onSnapshot((snapShot) => {
+          this.setState(
+            {
+              currentUser: {
+                id: snapShot.id,
+                ...snapShot.data(),
+              },
+            },
+            () => {
+              console.log(this.state);
+            }
+          );
+        });
+      }
       this.setState({
-        currentUser: user,
+        currentUser: userAuth,
       });
     });
   }
+  // auth.onAuthStateChanged returns an object that contains user data.
+
   // this.unsubscribeFromAuth now return a function. By attaching the () to the end of this.unsubscribeFromAuth,
   // the function which the auth.onAuthStateChanged(...) returned and got assigned to this.unsubscribeFromAuth gets called.
   // Since it is called in the componentWillUnmount method, when the App component unmounts, the channel to firebase gets closed.
