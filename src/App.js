@@ -8,7 +8,7 @@ import SignInAndSignUp from "./pages/sign-in-and-sign-up/sign-in-and-sign-up";
 
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { setCurrentUser as importedSetCurrentUser } from "./redux/user/user.actions";
@@ -18,6 +18,7 @@ class App extends Component {
 
   componentDidMount() {
     const { setCurrentUser } = this.props;
+    // the reason why this.props gets setCurrentUser here is because "mapDispatchToProps" dispatches user actions I can map to the props in the App component
 
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       console.log("userAuth", userAuth);
@@ -53,14 +54,25 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
-          <Route path="/signin" component={SignInAndSignUp} />
+          <Route
+            exact
+            path="/signin"
+            render={() =>
+              this.props.currentUser ? <Redirect to="/" /> : <SignInAndSignUp />
+            }
+          />
         </Switch>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(importedSetCurrentUser(user)),
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
