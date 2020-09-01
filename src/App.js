@@ -18,7 +18,8 @@ class App extends Component {
 
   componentDidMount() {
     const { setCurrentUser } = this.props;
-    // the reason why this.props gets setCurrentUser here is because "mapDispatchToProps" dispatches user actions I can map to the props in the App component
+    // the reason why this.props gets setCurrentUser here is because "mapDispatchToProps" dispatches user actions I can map to the props in the App component.
+    // So this.props.setCurrentUser returns a function: that takes (user) as an argument and returns dispatch(importedSetCurrentUser(user). Find more about this (user) at the "mapDispatchToProps" section.
 
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       console.log("userAuth", userAuth);
@@ -74,5 +75,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(importedSetCurrentUser(user)),
 });
+// this is an anonymous function, so importedSetCurrentUser can take whatever the argument passes to.
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
