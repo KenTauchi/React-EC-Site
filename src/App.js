@@ -75,6 +75,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(importedSetCurrentUser(user)),
 });
-// this is an anonymous function, so importedSetCurrentUser can take whatever the argument passes to.
+// this is an anonymous function, so importedSetCurrentUser can take whatever the argument passed to it.
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
