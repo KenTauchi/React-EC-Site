@@ -9,6 +9,10 @@ import { auth } from "../../firebase/firebase.utils";
 
 import { connect } from "react-redux";
 
+import { createStructuredSelector } from "reselect";
+import { selectCartHidden } from "../../redux/user/user.selectors";
+import { selectCurrentUser } from "../../redux/user/user.selectors";
+
 const Header = ({ currentUser, hidden }) => (
   <div className="header">
     <Link className="logo-container" to="/">
@@ -41,9 +45,10 @@ const Header = ({ currentUser, hidden }) => (
 // });
 // the state passed as an argument is the root-reducer.
 
-const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
-  currentUser,
-  hidden,
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  hidden: selectCartHidden,
 });
+// create structure selector will automatically pass top level state that we get as our map states props into each subsequent selector
 
 export default connect(mapStateToProps)(Header);

@@ -8,6 +8,8 @@ import { ReactComponent as ShoppingIcon } from "../../assets/shopping-bag.svg";
 
 import "./cart-icon.styles.scss";
 
+import { createStructuredSelector } from "reselect";
+
 const CartIcon = ({ toggleCartHidden, itemCount }) => (
   <div className="cart-icon" onClick={toggleCartHidden}>
     <ShoppingIcon className="shopping-icon" />
@@ -19,10 +21,8 @@ const mapDisptachToProps = (dispatch) => ({
   toggleCartHidden: () => dispatch(toggleCartHidden()),
 });
 
-const mapStateToProps = (state) => ({
-  itemCount: selectCartItemsCount(state),
-  // cartItem in the reduce function is each item in the curtItems array. reduce iterates each value in the array which is passes as a second parameter 'cartItem'
-  // the first parameter 'accumulatedQuantity' is the result you want to get at the end.
+const mapStateToProps = createStructuredSelector({
+  itemCount: selectCartItemsCount,
 });
 
 export default connect(mapStateToProps, mapDisptachToProps)(CartIcon);
