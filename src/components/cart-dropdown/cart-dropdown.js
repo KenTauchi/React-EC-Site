@@ -27,7 +27,7 @@ const CartDropdown = ({ cartItems, history, dispatch }) => (
       onClick={() => {
         history.push("/checkout");
         dispatch(toggleCartHidden());
-        // you can access to dispatch by passing it to argument without creating a mapDispatchToProps finction.
+        // you can access to dispatch by passing it to argument without creating a mapDispatchToProps function.
       }}
     >
       Go To Checkout
