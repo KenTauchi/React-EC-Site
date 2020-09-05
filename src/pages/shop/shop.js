@@ -16,6 +16,6 @@ const ShopPage = ({ match }) => {
 };
 
 // Route automatically returns the match poperty. ShopPage component gets a parameter match from the <route> in the App.js file.
-// the string "/:collectionId" after math.path is set in the params poperty in side the match.
+// the string "/:collectionId" after match.path is set in the params poperty in side the match.
 
 export default ShopPage;
